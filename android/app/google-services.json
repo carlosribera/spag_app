@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "583329359644",
+    "project_id": "spag-app-2b999",
+    "storage_bucket": "spag-app-2b999.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583329359644:android:516255c830bd72a9793cd9",
+        "android_client_info": {
+          "package_name": "com.example.spag_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583329359644-oj3nso2lquohs4j006jcg5qjfopqsmhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDae1JcpBR9h1BYz1jpxCqp0AaKzIC4i40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583329359644-oj3nso2lquohs4j006jcg5qjfopqsmhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
