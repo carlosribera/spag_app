@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spag_app/screens/auth/signup_screen.dart';
 
@@ -13,8 +14,31 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _passwordTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+  //login function
+  static Future<User?> loginUsingEmailPassword({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+    } on FirebaseException catch (e) {
+      if (e.code == 'user-not-found') {
+        // ignore: avoid_print
+        print('No user found for that email');
+      }
+    }
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,19 +71,17 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(
                 height: 20,
               ),
-              signInSignUpButton(context, true, () {
-                // FirebaseAuth.instance
-                //     .signInWithEmailAndPassword(
-                //         email: _emailTextController.text,
-                //         password: _passwordTextController.text)
-                //     .then((value) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
-                // }).onError((error, stackTace) {
-                // print("Error ${error.toString()}");
-                // });
+              signInSignUpButton(context, true, () async {
+                //Let's test the app
+                User? user = await loginUsingEmailPassword(
+                    email: _emailTextController.text.trim(),
+                    password: _passwordTextController.text.trim(),
+                    context: context);
+                if (user != null) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const HomeScreen()));
+                }            
               }),
               signUpOption(),
             ],

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../reusable_widgets/reusable_widgets.dart';
@@ -51,16 +52,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
             reusableTextField("Enter Password", Icons.lock_outline, true,
                 _passwordTextController),
             const SizedBox(height: 20),
-            signInSignUpButton(context, false, () {
-              // FirebaseAuth.instance.createUserWithEmailAndPassword(
-              //     email: _emailTextController.text,
-              // password: _passwordTextController.text).then((value) {
-              // print("Created new account");
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
-              // } ).onError((error,stackTrace) {
-              // print("Error ${error.toString()}");
-              // });
+            signInSignUpButton(context, false, () async {
+              FirebaseAuth.instance
+                  .createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text)
+                  .then((value) {
+                // ignore: avoid_print
+                print("Created new account");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              }).onError((error, stackTrace) {
+                // ignore: avoid_print
+                print("Error ${error.toString()}");
+              });
             })
           ]),
         )),
